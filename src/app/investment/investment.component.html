@@ -1,0 +1,64 @@
+<!-- * * * * * * * * * * * The Form component below * * * * * * * * * * * -->
+<div class="form-container">
+    <h2>Investment Details Form</h2>
+    <form [formGroup]="investmentForm" (ngSubmit)="onSubmit()">
+      <!-- Asset Type -->
+      <div>
+        <label for="assetType">Asset Type</label>
+        <select id="assetType" formControlName="assetType">
+          <option value="" disabled>Select an asset type</option>
+          <option value="stocks">Stocks</option>
+          <option value="bonds">Bonds</option>
+          <option value="real-estate">Real Estate</option>
+          <option value="cash">Cash</option>
+        </select>
+        <div *ngIf="investmentForm.controls['assetType'].touched && investmentForm.controls['assetType'].invalid">
+          <small *ngIf="investmentForm.controls['assetType'].errors?.required">Asset type is required.</small>
+        </div>
+      </div>
+  
+      <!-- Quantity -->
+      <div>
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" formControlName="quantity" />
+        <div *ngIf="investmentForm.controls['quantity'].touched && investmentForm.controls['quantity'].invalid">
+          <small *ngIf="investmentForm.controls['quantity'].errors?.required">Quantity is required.</small>
+          <small *ngIf="investmentForm.controls['quantity'].errors?.min">Quantity must be greater than 0.</small>
+        </div>
+      </div>
+  
+      <!-- Purchase Price -->
+      <div>
+        <label for="purchasePrice">Purchase Price</label>
+        <input id="purchasePrice" type="number" formControlName="purchasePrice" />
+        <div *ngIf="investmentForm.controls['purchasePrice'].touched && investmentForm.controls['purchasePrice'].invalid">
+          <small *ngIf="investmentForm.controls['purchasePrice'].errors?.required">Purchase price is required.</small>
+          <small *ngIf="investmentForm.controls['purchasePrice'].errors?.min">Price must be greater than 0.</small>
+        </div>
+      </div>
+  
+      <!-- Date -->
+      <div>
+        <label for="purchaseDate">Purchase Date</label>
+        <input id="purchaseDate" type="date" formControlName="purchaseDate" />
+        <div *ngIf="investmentForm.controls['purchaseDate'].touched && investmentForm.controls['purchaseDate'].invalid">
+          <small *ngIf="investmentForm.controls['purchaseDate'].errors?.required">Purchase date is required.</small>
+        </div>
+      </div>
+  
+      <!-- Review Section -->
+      <div class="review-section" *ngIf="isReview">
+        <h3>Review Investment Details</h3>
+        <p><strong>Asset Type:</strong> {{ investmentForm.value.assetType }}</p>
+        <p><strong>Quantity:</strong> {{ investmentForm.value.quantity }}</p>
+        <p><strong>Purchase Price:</strong> {{ investmentForm.value.purchasePrice }}</p>
+        <p><strong>Purchase Date:</strong> {{ investmentForm.value.purchaseDate }}</p>
+      </div>
+  
+      <!-- Buttons -->
+      <div>
+        <button type="button" (click)="reviewDetails()" [disabled]="investmentForm.invalid">Review</button>
+        <button type="submit" [disabled]="investmentForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
